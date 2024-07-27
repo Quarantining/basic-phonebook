@@ -1,32 +1,7 @@
-# user should be able to enter a name and get returned a phone number.
-# user can delete existing entries in the phone book.
-# user can add new entries into the phone book.
-# user can list all entries in the phone book.
-
-# list of things to add:
-    # more default phonebook entries (done)
-    # more descriptive comments (on going)
-    # error handling
-    # when deleting an entry, show the phone number. Ex) "Removed Bob "123""
-    # actually remember to update the version number
-    # allow for non casesensitive searching/deleting
-    # confirmation when deleting entry
-    # save and load data to file
-    # edit existing entries
-    # help command
-    # clear main menu after each use for cleaner interaction
-    # reformat program into using functions
-
-# completed:
-    # made it not possible to add duplicate names.
-    # added confirmation when deleting a name.
-
-##############################################################
-
 # simple phonebook program
 
 # displays version on title screen
-version = "1.2"
+version = "1.3"
 
 # entries
 phonebook = {
@@ -90,7 +65,13 @@ while True:
 
         # shows all entries
         elif user_input == "list":
-            print(phonebook)
+            # Calculate the longest name length
+            longest_name = max(len(name) for name in phonebook)
+            # Show all entries
+            for key, value in phonebook.items():
+                # Calculate the number of dots needed
+                dot = "." * (longest_name - len(key) + 10)
+                print(f"{key}{dot}{value}")
 
         # stops program
         elif user_input == "stop":

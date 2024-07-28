@@ -1,7 +1,7 @@
 # simple phonebook program
 
 # displays version on title screen
-version = "1.3"
+version = "1.4"
 
 # entries
 phonebook = {
@@ -22,7 +22,7 @@ phonebook = {
 print(f"""- - - - - - - - - - - - - - - - -
 basic phonebook             
 
-"search" --> search by name 
+"search" --> search entry 
 "add" --> add entry
 "delete" --> delete entry
 "list" --> lists all entries 
@@ -37,8 +37,11 @@ while True:
     try:
         # search name
         if user_input == "search":
-            search = input(str("enter name --> ")) # prompts user to enter name to search for
-            print(phonebook.get(search, "entry not found")) # prints entry if found
+            search_type = input("how do you want to search? (name/number): ")
+            
+            if search_type == "name":
+                search = input(str("enter name --> ")) # prompts user to enter name to search for
+                print(phonebook.get(search, "entry not found")) # prints entry if found
 
         # adds entry
         elif user_input == "add":
@@ -66,16 +69,23 @@ while True:
         # shows all entries
         elif user_input == "list":
             # Calculate the longest name length
-            longest_name = max(len(name) for name in phonebook)
+            longest_name = max(len(name) for name in phonebook) # finds longest name
             # Show all entries
             for key, value in phonebook.items():
                 # Calculate the number of dots needed
-                dot = "." * (longest_name - len(key) + 10)
+                dot = "." * (longest_name - len(key) + 10) # calculates the difference
                 print(f"{key}{dot}{value}")
 
         # stops program
         elif user_input == "stop":
-            break
+            confirm_stop = input("are you sure? (yes/no): ")
+            if confirm_stop == "yes":
+                print("stopping..")
+                break
+            elif confirm_stop == "no":
+                print("")
+            else:
+                print("Invalid Input. Please try again.")
         else:
             print("Invalid Input. Please try again.")
     except KeyError:

@@ -1,7 +1,9 @@
 # simple phonebook program
 
 # displays version on title screen
-version = "1.5"
+version = "1.6"
+
+selected_password = "123AbC@!_"
 
 # phonebook entries
 phonebook = {
@@ -25,7 +27,9 @@ basic phonebook
 "search" --> search entry 
 "add" --> add entry
 "delete" --> delete entry
+"delete all" --> removes all entries
 "list" --> lists all entries 
+"change password" --> changes password
 "stop" --> ends program 
                             v{version}
 - - - - - - - - - - - - - - - - -
@@ -75,15 +79,38 @@ def list_entries():
         print(f"{key}{dot}{value}")
 
 
+def delete_all():
+    confirm_delete = input("are you sure? (yes/no): ")
+    if confirm_delete == "yes":
+        password = input("enter password: ")
+        if password == selected_password:
+            phonebook.clear()
+            print("phonebook cleared")
+        else:
+            print("Incorrect Password.")
+
+    elif confirm_delete == "no":
+        print("process canceled.")
+    else:
+        print("Invalid Input")
+
+
+def change_password():
+    user_input = input("do you want to change password? (yes/no): ")
+    if user_input == "yes":
+        change_password = input("change password: ")
+        selected_password = change_password
+        print(f"password changed to {change_password}")
+    elif user_input == "no":
+        print("password not changed.")
+    else:
+        print("Invalid Input.")
 
 
 
 while True:
-
     user_input = input("> ")
-
     try:
-
         # search name
         if user_input == "search":
 
@@ -113,6 +140,15 @@ while True:
         # shows all entries
         elif user_input == "list":
             list_entries() # calls function (no argument needed).
+
+        # delete all entries
+        elif user_input == "delete all":
+            delete_all() # will prompt confirmation and password before clearing.
+
+        # change password
+        elif user_input == "change password":
+            change_password()
+
 
         # stops program
         elif user_input == "stop":
@@ -147,3 +183,6 @@ while True:
     # clear main menu for better interaction.
     # once a mode is selected, loop it until user either completes an action or exist. (this way it wont
     # exit even after you input a invalid value).
+
+    # added clear method (with password).
+    # added way to change password.
